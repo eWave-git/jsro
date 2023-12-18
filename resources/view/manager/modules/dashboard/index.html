@@ -1,0 +1,140 @@
+<div class="content">
+    <div class="tit_area">
+        <h2>{{farm_name}}</h2>
+    </div>
+    <!-- 장치 목록 -->
+    <div class="dvc_wrap">
+        {{widget_card}}
+    </div>
+    <!--// 장치 목록 -->
+</div>
+
+<!-- 장치세팅팝업 -->
+<section class="popup dev_pop">
+    <form name="frm">
+        <input type="hidden" name="idx" value="">
+        <div class="inner">
+            <div class="pop_wrap">
+                <button class="btn_close"><span class="blind">닫기</span></button>
+                <div class="cont">
+                    <h3 class="pop_tit">장치 이름</h3>
+                    <input type="text" class="inpt_txt" name="widget_name" value="">
+                </div>
+                <div class="cont">
+                    <h3 class="pop_tit">Data</h3>
+                    <div class="data_list">
+                        <table>
+                            <colgroup>
+                                <col width="20%">
+                                <col width="50%">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>사용유무</th>
+                                <th class="tl">이름</th>
+                                <th class="tl">단위</th>
+                            </tr>
+                            </thead>
+                            <tbody id="dynamicTbody">
+<!--                            <tr>-->
+<!--                                <td>-->
+<!--                                    <input type="checkbox" name="data" checked>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <input type="text" class="inpt_txt" value="온도">-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <select>-->
+<!--                                        <option>°C</option>-->
+<!--                                        <option>%</option>-->
+<!--                                        <option>%</option>-->
+<!--                                    </select>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>-->
+<!--                                    <input type="checkbox" name="data" checked>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <input type="text" class="inpt_txt" value="습도">-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <select>-->
+<!--                                        <option>%</option>-->
+<!--                                        <option>°C</option>-->
+<!--                                        <option>%</option>-->
+<!--                                    </select>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>-->
+<!--                                    <input type="checkbox" name="data" checked>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <input type="text" class="inpt_txt" value="이산화탄소">-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <select>-->
+<!--                                        <option>°C</option>-->
+<!--                                        <option>%</option>-->
+<!--                                        <option>%</option>-->
+<!--                                    </select>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>-->
+<!--                                    <input type="checkbox" name="data">-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <input type="text" class="inpt_txt" value="미세먼지 0.1">-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <select>-->
+<!--                                        <option>°C</option>-->
+<!--                                        <option>%</option>-->
+<!--                                        <option>%</option>-->
+<!--                                    </select>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>-->
+<!--                                    <input type="checkbox" name="data">-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <input type="text" class="inpt_txt" value="미세먼지 10">-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <select>-->
+<!--                                        <option>°C</option>-->
+<!--                                        <option>%</option>-->
+<!--                                        <option>%</option>-->
+<!--                                    </select>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>-->
+<!--                                    <input type="checkbox" name="data">-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <input type="text" class="inpt_txt" value="미세먼지 2.5">-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <select>-->
+<!--                                        <option>°C</option>-->
+<!--                                        <option>%</option>-->
+<!--                                        <option>%</option>-->
+<!--                                    </select>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="btn_wrap">
+                        <button type="button" name="modal_submit" class="btn main_btn">수정</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+<!--// 장치세팅팝업 -->

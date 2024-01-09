@@ -1,1 +1,7 @@
 신규 테스트 파일 작성 240109
+
+JSRO-mobileapp
+OneSignal App ID : bb36e9e7-6b88-43b1-acd1-425da4ff4d80
+Rest API Key : MjBkMTA4MGItMWRiMy00NTIzLWFmZjAtYjc4MmU2NGM0ODNj
+firebase:
+-  패키지이름 : com.ewave.jsro

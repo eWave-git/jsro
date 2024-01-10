@@ -1,5 +1,5 @@
 <?php
-// 수정사항 없음 20240109 //
+// push 테스트 수행 //
 include_once __DIR__."/crontab_init.php";
 
 use \WilliamCosta\DatabaseManager\Database;
@@ -112,7 +112,7 @@ foreach ($array as $k => $v) {
     if (isset($results->alarm_idx)) {
         // "있다면";
 
-        $diff = Common::date_diff($results->created_at, date("Y-m-d H:i:s"), 'i');
+        $diff = Common::date_diff($results->created_at, date("Y-m-d H:i:s"), 'i');                                  // 24년 1월 11일 알람발송 간격 1분 이상으면 보낼수 있도록 수정해서 테스트 할 수 있게 함
         if ($diff >= 1) {
            alarmHistoryInsert($v);
            Common::sendPush($v['board_type_name']." 경보발생", $v['alarm_contents'],$v['push_subscription_id'],"");

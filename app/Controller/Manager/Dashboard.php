@@ -197,7 +197,7 @@ class Dashboard extends Page {
                             $value = ($water_row->{$v['field']});
                         }
                     } else {
-                        $value = round($rew_obj->{$v['field']}, 1);
+                        $value = ($rew_obj->{$v['field']});
                     }
 
                     $symbol = $v['symbol'];

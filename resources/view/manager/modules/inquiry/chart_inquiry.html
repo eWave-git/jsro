@@ -169,7 +169,7 @@
                         );
 
                         var easing = am5.ease.linear;
-                        chart.get("colors").set("step", 3);
+                        chart.get("colors").set("step", 9);
 
                         // Create axes
                         // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
@@ -205,7 +205,8 @@
                             var yRenderer = am5xy.AxisRendererY.new(root, {
                                 opposite: opposite
                             });
-                            var yAxis = chart.yAxes.push(
+                            
+                            var yAxis = chart.yAxes.push(                   // y축 값 생성 하는 부분        https://rnwns2.tistory.com/111
                                 am5xy.ValueAxis.new(root, {
                                     maxDeviation: 1,
                                     renderer: yRenderer
@@ -232,11 +233,11 @@
                                 })
                             );
 
-                            //series.fills.template.setAll({ fillOpacity: 0.2, visible: true });
+                            //series.fills.template.setAll({ fillOpacity: 0.2, visible: true });            // 그래프를 면적으로 표현
                             series.strokes.template.setAll({ strokeWidth: 1 });
 
                             yRenderer.grid.template.set("strokeOpacity", 0.05);
-                            yRenderer.labels.template.set("fill", series.get("fill"));
+                            yRenderer.labels.template.set("fill", series.get("fill"));                      // y축 값 범위색깔 표현
                             yRenderer.setAll({
                                 stroke: series.get("fill"),
                                 strokeOpacity: 1,

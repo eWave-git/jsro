@@ -206,12 +206,10 @@
                                 opposite: opposite
                             });
                             
-                            var yAxis = chart.yAxes.push(                   // y축 값 생성 하는 부분        https://rnwns2.tistory.com/111
-                                am5xy.ValueAxis.new(root, {
+                            var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
                                     maxDeviation: 1,
                                     renderer: yRenderer
-                                })
-                            );
+                                }));
 
                             if (chart.yAxes.indexOf(yAxis) > 0) {
                                 yAxis.set("syncWithAxis", chart.yAxes.getIndex(0));

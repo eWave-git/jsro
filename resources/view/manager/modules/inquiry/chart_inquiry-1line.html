@@ -1,0 +1,334 @@
+<div class="content">
+    <div class="tit_area">
+        <h2>그래프 조회</h2>
+    </div>
+
+    <div class="tb_search">
+        <div class="search_wrap">
+            <div class="form_conbox">
+                <div class="item">
+                    <div class="form_tit">장치</div>
+                    <div class="form_select">
+                        <select name="device" id="device">
+                            <option value="">선택하세요.</option>
+                            {{device_options}}
+                        </select>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="form_tit">기간</div>
+                    <div class="form_input">
+                        <input type="text" class="inpt_txt" id="sdateAtedate" name="sdateAtedate" value="{{sdateAtedate}}">
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="form_tit">타입 </div>
+                    <div class="form_select">
+                        <select name="type" id="type">
+                            <option value="normal">환경데이터</option>
+                            <option value="water">음수데이터</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="form_tit">간격</div>
+                    <div class="form_select">
+                        <select name="interval" id="interval" disabled>
+                            <option value="H">시간음수량</option>
+                            <option value="D">하루음수량</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="btn_wrap">
+            <button type="button" name="search" class="btn sub_btn btn_search"><span>조회</span></button>
+        </div>
+    </div>
+
+    <div class="bd_wrap graph_wrap">
+        <div class="graph_area" id="chartdiv">
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        function chartDisposeRoot() {
+            am5.array.each(am5.registry.rootElements, function (root) {
+                // 전체 차트 초기화
+                if (root !== null) {
+                    root.dispose();
+                };
+            });
+        };
+
+        $('#sdateAtedate').daterangepicker({
+            locale: {
+                // "format": 'YYYY-MM-DD HH:mm:ss',     // 일시 노출 포맷
+                "format": 'YYYY-MM-DD',     // 일시 노출 포맷
+                "applyLabel": "확인",                    // 확인 버튼 텍스트
+                "cancelLabel": "취소",                   // 취소 버튼 텍스트
+                "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+                "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+                "customRangeLabel": "날짜지정",
+            },
+            timePicker: false,                        // 시간 노출 여부
+            showDropdowns: true,                     // 년월 수동 설정 여부
+            autoApply: true,                         // 확인/취소 버튼 사용여부
+            timePicker24Hour: true,                  // 24시간 노출 여부(ex> true : 23:50, false : PM 11:50)
+            ranges: {
+                '오늘': [moment(), moment()],
+                '어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                '최근 일주일': [moment().subtract(7, 'days'), moment().subtract(1, 'days')],
+                // 'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                // 'This Month': [moment().startOf('month'), moment().endOf('month')],
+                // 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+            
+        })
+
+        $('#type').change(function () {
+
+            if ($(this).val() == 'water') {
+                $('#interval').attr("disabled", false);
+            } else {
+                $('#interval').attr("disabled", true);
+            }
+        });
+
+        $("[name='search']").click(function () {
+            chartDisposeRoot();
+            $.ajax({
+                url:'/manager/chart_search',
+                type:'post',
+                data: {
+                    widget_idx:$("[name='device']").val(),
+                    sdateAtedate:$("[name='sdateAtedate']").val(),
+                    type:$("[name='type']").val(),
+                    interval:$("[name='interval']").val(),
+                },
+                dataType: "json",
+                success:function(obj){
+                    var data = []
+                    var field = []
+                    $.each(obj.obj, function (key, value) {
+                        // console.log(value.date1);
+                        var d = value.dates.split(' ');
+                        var y = d[0].split('-');
+                        var h = d[1].split(':');
+                        data.push({
+                            date: new Date(y[0], y[1], y[2],h[0],h[1],h[2]).getTime(),
+
+                        });
+
+                        $.each(obj.fields, function (key1, value1) {
+                            // console.log(kk+'||'+obj.obj[key][kk])
+                            data[key][value1.field] = obj.obj[key][value1.field];
+                        })
+
+                    })
+
+                    // console.log(data)
+                    $.each(obj.fields, function (key, value) {
+                        field.push({
+                            fieldDate: value.field,
+                            fieldName: value.name,
+                        });
+                    })
+
+
+                am5.ready(function () {
+                    var root = am5.Root.new("chartdiv");
+
+
+                var chart = root.container.children.push(
+                    am5xy.XYChart.new(root, {
+                        focusable: true,
+                        panX: true,
+                        panY: true,
+                        wheelX: "panX",
+                        wheelY: "zoomX",
+                        pinchZoomX:true
+                    })
+                );
+
+                const result = {
+                    "success": true,
+                    "obj": [
+                        {
+                            "dates": "2024-01-20 23:17:00",
+                            "data1": 12.1,
+                            "data2": 12.2,
+                            "data3": 12.3,
+                            "data4": 12.4
+                        },
+                        {
+                            "dates": "2024-01-20 23:18:00",
+                            "data1": 12.5,
+                            "data2": 12.6,
+                            "data3": 12.7,
+                            "data4": 12.8
+                        },
+                        {
+                            "dates": "2024-01-20 23:19:00",
+                            "data1": 13.1,
+                            "data2": 14.2,
+                            "data3": 15.2,
+                            "data4": 16.4
+                        },
+                        {
+                            "dates": "2024-01-20 23:20:00",
+                            "data1": 17.3,
+                            "data2": 18.3,
+                            "data3": 19.3,
+                            "data4": 20.3
+                        },
+                        {
+                            "dates": "2024-01-20 23:21:00",
+                            "data1": 21.0,
+                            "data2": 22.1,
+                            "data3": 23.1,
+                            "data4": 24.0
+                        }
+                    ],
+                    "fields": [
+                        {
+                            "field": "data1",
+                            "name": "mA-1",
+                            "series": "series0"
+                        },
+                        {
+                            "field": "data2",
+                            "name": "mA-2",
+
+                        },
+                        {
+                            "field": "data3",
+                            "name": "mA-3",
+
+                        },
+                        {
+                            "field": "data4",
+                            "name": "mA-4"
+                        }
+                    ]
+                };
+
+                var data = [];
+                result.obj.forEach(item => {
+                    var d = item.dates.split(' ');
+                    var y = d[0].split('-');
+                    var h = d[1].split(':');
+                    var dataItem = {
+                        date: new Date(y[0], y[1] - 1, y[2], h[0], h[1], h[2]).getTime()
+                    };
+                    result.fields.forEach(field => {
+                        dataItem[field.field] = item[field.field];
+                    });
+                    data.push(dataItem);
+                });
+
+                /*var xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
+                    baseInterval: { timeUnit: "minute", count: 1 },
+                    renderer: am5xy.AxisRendererX.new(root, {}),
+                    tooltip: am5.Tooltip.new(root, {})
+                }));
+*/
+                var xAxis = chart.xAxes.push(
+                    am5xy.DateAxis.new(root, {
+                        maxDeviation: 0.5,
+                        groupData: true,
+                        baseInterval: {
+                        maxDeviation: 0.1,
+                        groupData: false,
+                        timeUnit: "minute",
+                        count: 1
+                    },
+                    tooltipDateFormat: "yyyy-MM-dd HH:mm",
+                    renderer: am5xy.AxisRendererX.new(root, {
+                    minGridDistance: 100, pan:"zoom"
+                    }),
+                    tooltip: am5.Tooltip.new(root, {})
+                })
+                );
+
+
+                var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+                    renderer: am5xy.AxisRendererY.new(root, {})
+                }));
+
+            result.fields.forEach((field, index) => {
+                    var series = chart.series.push(am5xy.LineSeries.new(root, {
+                        name: field.name,
+                        xAxis: xAxis,
+                        yAxis: yAxis,
+                        valueYField: field.field,
+                        valueXField: "date",
+                        tooltip: am5.Tooltip.new(root, {
+                            labelText: "{valueY}"
+                        })
+                    }));
+
+                    // Set data
+                    series.data.setAll(data);
+
+                    // Make stuff animate on load
+                    series.appear(1000);
+                });
+/*
+                result.fields.forEach((field, index) => {
+                    var series = chart.series.push(am5xy.LineSeries.new(root, {
+                        name: field.name,
+                        xAxis: xAxis,
+                        yAxis: yAxis,
+                        valueYField: field.field,
+                        valueXField: "date",
+                        tooltip: am5.Tooltip.new(root, {
+                            labelText: "{valueY}"
+                        })
+                    }));
+
+                    // Set data
+                    series.data.setAll(data);
+
+                    // Make stuff animate on load
+                    series.appear(1000);
+                });
+*/
+                // Add cursor
+                chart.set("cursor", am5xy.XYCursor.new(root, {
+                    behavior: "zoomXY",
+                    xAxis: xAxis
+                }));
+
+                xAxis.set("tooltip", am5.Tooltip.new(root, {
+                    themeTags: ["axis"]
+                }));
+
+                yAxis.set("tooltip", am5.Tooltip.new(root, {
+                    themeTags: ["axis"]
+                }));
+
+                chart.appear(1000, 100);
+
+
+
+                    }); // end am5.ready()
+
+
+                }
+            })
+
+
+        })
+    });
+
+    
+
+</script>

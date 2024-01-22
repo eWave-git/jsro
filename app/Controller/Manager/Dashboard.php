@@ -239,7 +239,7 @@ class Dashboard extends Page {
                     'subject' => $obj[$k]['widget_name'],
                     'idx' => $obj[$k]['idx'],
                     'item' => self::getCardItem($rew_obj, $v['board_name']),
-                    'update_at' => substr($rew_obj->created_at,5,11),
+                    'update_at' => substr($rew_obj->created_at,5,14),
                 ]);
             }
         }

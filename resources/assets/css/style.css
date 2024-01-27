@@ -55,7 +55,8 @@ input[type="password"]::-ms-clear {display:none;}
 .lnb {width:250px; height:100vh; background-color:#434343; box-sizing:border-box; z-index:10;}
 .lnb h1 a {display:block; margin:53px auto; width:124px; height:auto;}
 .lnb h1 a img {width:100%; height:auto;}
-.lnb .log_btn {display:none;}
+/*.lnb .log_btn {display:none;}*/
+.lnb .log_btn {padding-top: 100px; display: flex; justify-content: center;}
 
 /* depth_01 */
 .depth_01 > li > a {display:block; width:100%; padding:19px 25px 19px 23px; box-sizing:border-box; color:#fff; text-align:right; background-position:left 23px center; background-repeat:no-repeat; background-size:32px; transition:.3s;}
@@ -86,6 +87,7 @@ input[type="password"]::-ms-clear {display:none;}
 #contents {flex:1; height:100%; width:calc(100% - 250px);}
 
 /* header */
+#header { display: none}
 #header {background-color:#fff; position:fixed; right:0; top:0; width:calc(100% - 250px); height:80px; box-sizing:border-box;}
 #header .inner {padding:20px 40px 19px; display:flex; align-items:center; box-sizing:border-box; width:100%;}
 .log_btn {display:flex; align-items:center; margin-left:auto;}
@@ -100,13 +102,14 @@ input[type="password"]::-ms-clear {display:none;}
 #header .mo_wrap .site_btn {width:40px; height:40px; background:url(../images/btn_site.svg) no-repeat center; background-size:100% auto; transition:.2s;}
 #header .mo_wrap .site_btn.on {background-image:url(../images/btn_site_close.svg);}
 
-
+/* 20240120 수정 박선혁 전체 padding:40px->20px 변경*/
 /* content */
-.content {background-color:#F8F8F9; height:calc(100% - 80px); margin-top:80px; overflow-y:auto; overflow-x:hidden; padding:40px; box-sizing:border-box;}
+/*.content {background-color:#F8F8F9; height:calc(100% - 80px); margin-top:80px; overflow-y:auto; overflow-x:hidden; padding:40px; box-sizing:border-box;}*/
+.content {background-color:#F8F8F9; height:100%; overflow-y:auto; overflow-x:hidden; padding:20px; box-sizing:border-box;}
 
 @media only screen and (max-width:1500px) {
 	/* content */
-	.content {padding:30px;}
+	.content {padding:30px}
 }
 @media only screen and (max-width:768px) {
 	/* lnb */
@@ -119,10 +122,11 @@ input[type="password"]::-ms-clear {display:none;}
 	.lnb .log_btn .logout {background-color:#f8f8f9; padding:4px 18px;}
 
 	/* content */
+	.content {background-color:#F8F8F9; height:calc(100% - 80px); margin-top:80px; overflow-y:auto; overflow-x:hidden; padding:40px; box-sizing:border-box;}
 	.content {padding:20px;}
 
 	/* header */
-	#header {background-color:#434343; width:100%;}
+	#header { display: block; background-color:#434343; width:100%;}
 	#header .inner {padding:0 10px 0 20px; height:100%;}
 	#header .log_btn {display:none;}
 	#header .mo_wrap {display:flex;}
@@ -420,10 +424,14 @@ input[type="password"]::-ms-clear {display:none;}
 .tb_search .btn_wrap .btn_down {width:257px;}
 .tb_search .btn_wrap .btn_down span {font-size:24px; padding-left:47px; background:url(../images/ico_down.svg) no-repeat left center;}
 
+
+/* 20240113 수정 박선혁 대쉬보드 -> 그래프에서 height 800px -> 530px 로 수정*/
+/* 20240120 수정 박선혁 대쉬보드 -> 그래프에서 height 530px -> 650px 로 수정 , 버튼여백 줄이면서 그래프 늘리기*/
 .graph_wrap {padding:20px;}
 /*.graph_area {overflow-y:auto;}*/
-.graph_area {overflow-y:auto; width: 100%; height: 800px; max-width:100%; }
-.graph_area img {width:1112px; height:auto; margin:0 auto; display:block;}
+/*.graph_area {overflow-y:auto; width: 100%; height: 800px; max-width:100%; }*/
+.graph_area {overflow-y:auto; width: 100%; height: 650px; max-width:100%; }
+.graph_area img {width:1112px; height:auto; margin:10px auto; display:block;}
 
 @media only screen and (max-width:1880px) {
 	.tb_search .search_wrap {width:90%;}
